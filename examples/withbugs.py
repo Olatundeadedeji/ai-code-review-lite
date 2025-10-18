@@ -13,3 +13,6 @@ def insecure_more(cmd):
     import subprocess
     subprocess.Popen(cmd, shell=True)
     return True
+
+def noop():
+    return None
