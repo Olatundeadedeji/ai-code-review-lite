@@ -202,4 +202,4 @@ make docker   # docker build -t aicrl:local .
 ---
 
 ## 13) License
-MIT (see `LICENSE.md`).
+MIT — see [LICENSE.md](LICENSE.md).
