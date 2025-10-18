@@ -1,0 +1,12 @@
+[project]
+name = "ai-code-review-lite"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Git diff → ranked risk report using flake8, bandit, radon."
+
+[tool.pytest.ini_options]
+addopts = "-q"
+
+[tool.coverage.run]
+branch = true
+source = ["analyzers", "review.py"]

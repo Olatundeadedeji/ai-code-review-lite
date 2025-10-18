@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  build-test-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+      - run: python review.py --output report.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: code-review-report
+          path: report.md
+      - run: docker build -t ghcr.io/${{ github.repository }}:ci .
+      - name: Log in to GHCR
+        if: github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push image (main)
+        if: github.ref == 'refs/heads/main'
+        run: docker push ghcr.io/${{ github.repository }}:ci
